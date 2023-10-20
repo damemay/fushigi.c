@@ -29,6 +29,12 @@ typedef struct {
 } fsg_config;
 
 typedef struct {
+    SDL_Rect* rects;
+    int rect_count;
+    uint8_t size;
+} fsg_minimap;
+
+typedef struct {
     fsg_vec2 size;
     uint8_t data[FSG_MAP_HEIGHT][FSG_MAP_WIDTH];
     SDL_Texture** tiles;
@@ -46,6 +52,7 @@ typedef struct {
     fsg_config* config;
     fsg_entity entity_head, *entity_tail;
     fsg_map* map;
+    fsg_minimap* minimap;
     fsg_entity* player;
     fsg_vec2 camera;
 } fsg_dungeon;

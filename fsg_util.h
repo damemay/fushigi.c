@@ -27,6 +27,9 @@ fsg_map* fsg_map_create(fsg_dungeon* d);
 void fsg_map_render(fsg_dungeon* d);
 void fsg_map_generate(fsg_dungeon* d);
 
+fsg_minimap* fsg_minimap_create(fsg_dungeon* d, uint8_t size);
+void fsg_minimap_render(fsg_dungeon* d);
+
 fsg_entity* fsg_entity_create(fsg_dungeon* d);
 void fsg_entity_render(fsg_dungeon* d);
 
