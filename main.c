@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
         .render_width   = 30,
         .render_height  = 17,
         .tilesize       = 32,
-        .max_tiles      = 1,
+        .max_tiles      = 2,
         .resource_path  = "res",
         .player_path    = "res/char.png",
         .player_width   = 32,

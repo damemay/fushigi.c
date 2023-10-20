@@ -19,18 +19,18 @@ fsg_entity* fsg_entity_create(fsg_dungeon* d) {
     return e;
 }
 
-void fsg_entity_render(fsg_dungeon* d, SDL_Renderer** r) {
+void fsg_entity_render(fsg_dungeon* d) {
     for(fsg_entity* e = d->entity_head.next; e != NULL; e = e->next) {
         int x = ((e->pos.x - d->camera.x) * d->config->tilesize) + (d->config->tilesize/2);
         int y = ((e->pos.y - d->camera.y) * d->config->tilesize) + (d->config->tilesize/2);
 
         SDL_Rect rect = {
             x - e->size.x/2,
-            y - e->size.y/2,
+            y - e->size.y,
             e->size.x,
             e->size.y
         };
-        SDL_RenderCopyEx(*r, e->texture, NULL, &rect, 0, NULL,
-                e->facing == fsg_right ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL);
+        SDL_RenderCopyEx(*d->config->sdl_renderer, e->texture, NULL, &rect, 0, NULL,
+                e->facing == fsg_left ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
     }
 }

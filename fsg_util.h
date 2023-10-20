@@ -13,13 +13,26 @@
         return NULL; \
     }
 
-fsg_map* fsg_map_create(uint8_t w, uint8_t h, uint8_t mt, char* p, SDL_Renderer** r);
-void fsg_map_render(fsg_dungeon* d, SDL_Renderer** r);
+#define fsg_min(VAL, MIN) (((VAL) < (MIN)) ? (VAL) : (MIN))
+#define fsg_max(VAL, MAX) (((VAL) > (MAX)) ? (VAL) : (MAX))
+
+inline int fsg_minmax(int val, int min, int max) {
+    int x = val;
+    if(x < min) x = min;
+    else if(x > max) x = max;
+    return x;
+}
+
+fsg_map* fsg_map_create(fsg_dungeon* d);
+void fsg_map_render(fsg_dungeon* d);
+void fsg_map_generate(fsg_dungeon* d);
 
 fsg_entity* fsg_entity_create(fsg_dungeon* d);
-void fsg_entity_render(fsg_dungeon* d, SDL_Renderer** r);
+void fsg_entity_render(fsg_dungeon* d);
 
 fsg_entity* fsg_player_create(fsg_dungeon* d);
 void fsg_player_movement(fsg_dungeon* d);
+
+void fsg_camera_update(fsg_dungeon* d);
 
 #endif
