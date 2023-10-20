@@ -10,6 +10,7 @@ typedef enum {
     fsg_down,
     fsg_left,
     fsg_right,
+    fsg_direction_count,
 } fsg_direction;
 
 typedef struct {

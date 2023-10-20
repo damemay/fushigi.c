@@ -24,13 +24,13 @@ void fsg_entity_render(fsg_dungeon* d) {
         int x = ((e->pos.x - d->camera.x) * d->config->tilesize) + (d->config->tilesize/2);
         int y = ((e->pos.y - d->camera.y) * d->config->tilesize) + (d->config->tilesize/2);
 
+        fsg_directed_rect(e->facing, e->size.x, e->size.y);
         SDL_Rect rect = {
             x - e->size.x/2,
-            y - e->size.y,
+            y - e->size.y+d->config->tilesize/2,
             e->size.x,
             e->size.y
         };
-        SDL_RenderCopyEx(*d->config->sdl_renderer, e->texture, NULL, &rect, 0, NULL,
-                e->facing == fsg_left ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+        SDL_RenderCopy(*d->config->sdl_renderer, e->texture, &dest, &rect);
     }
 }

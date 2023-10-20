@@ -7,7 +7,7 @@ int fsg_minmax(int, int, int);
 static inline int update_camera(int val, int width, int render_width) {
     int x = val;
     x -= render_width/2;
-    x = fsg_minmax(x, 0, width - render_width);
+    x = fsg_minmax(x, 0, width - render_width+1);
     return x;
 }
 
@@ -43,25 +43,27 @@ static inline void player_move(fsg_dungeon* d, int dx, int dy) {
 
 void fsg_player_movement(fsg_dungeon* d) {
     if(d->config->sdl_event->type == SDL_KEYDOWN || d->config->sdl_event->type == SDL_CONTROLLERBUTTONDOWN) {
+        int x = 0, y = 0;
         if(d->config->sdl_event->key.keysym.sym == SDLK_UP
                 || d->config->sdl_event->cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
-            player_move(d, 0, -1);
+            x = 0, y = -1;
             d->player->facing = fsg_up;
         }
         if(d->config->sdl_event->key.keysym.sym == SDLK_DOWN
                 || d->config->sdl_event->cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
-            player_move(d, 0, 1);
+            x = 0, y = 1;
             d->player->facing = fsg_down;
         }
         if(d->config->sdl_event->key.keysym.sym == SDLK_LEFT
                 || d->config->sdl_event->cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) {
-            player_move(d, -1, 0);
+            x = -1, y = 0;
             d->player->facing = fsg_left;
         }
         if(d->config->sdl_event->key.keysym.sym == SDLK_RIGHT
                 || d->config->sdl_event->cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) {
-            player_move(d, 1, 0);
+            x = 1, y = 0;
             d->player->facing = fsg_right;
         }
+        player_move(d, x, y);
     }
 }

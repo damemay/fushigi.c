@@ -5,7 +5,7 @@ all:
 		player.c \
 		map.c \
 		minimap.c \
-		randomwalk.c \
+		dungeonbuild.c \
 		cdlv/menu/cdlv_sdl.c \
 		-lSDL2 -lSDL2_image -lSDL2_ttf \
 		-L cdlv/build/ -lcdlv \

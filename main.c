@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
         .tilesize       = 32,
         .max_tiles      = 2,
         .resource_path  = "res",
-        .player_path    = "res/char.png",
+        .player_path    = "res/arrow.png",
         .player_width   = 32,
         .player_height  = 64,
         .sdl_renderer   = &sdl->renderer,
@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
             }
             fsg_movement(dungeon);
         }
+        SDL_SetRenderDrawColor(sdl->renderer, 0, 0, 0, 255);
         SDL_RenderClear(sdl->renderer);
         fsg_update(dungeon);
         fsg_render(dungeon);

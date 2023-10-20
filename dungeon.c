@@ -42,7 +42,7 @@ void fsg_render(fsg_dungeon* dungeon) {
 }
 
 void fsg_clean(fsg_dungeon* dungeon) {
-    for(uint8_t i=0; i<dungeon->config->max_tiles; i++)
+    for(uint8_t i=1; i<=dungeon->config->max_tiles; i++)
         if(dungeon->map->tiles[i]) SDL_DestroyTexture(dungeon->map->tiles[i]);
     if(dungeon->map->tiles) free(dungeon->map->tiles);
     if(dungeon->map) free(dungeon->map);
@@ -50,9 +50,16 @@ void fsg_clean(fsg_dungeon* dungeon) {
     if(dungeon->minimap->rects) free(dungeon->minimap->rects);
     if(dungeon->minimap) free(dungeon->minimap);
 
-    for(fsg_entity* e = dungeon->entity_head.next; e != NULL; e = e->next) {
+    fsg_entity* e = dungeon->entity_head.next;
+    while(e != NULL) {
         if(e->texture) SDL_DestroyTexture(e->texture);
+        e = e->next;
         if(e) free(e);
+    }
+
+    if(dungeon->player) {
+        if(dungeon->player->texture) SDL_DestroyTexture(dungeon->player->texture);
+        if(dungeon->player) free(dungeon->player);
     }
 
     if(dungeon) free(dungeon);

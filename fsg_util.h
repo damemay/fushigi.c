@@ -16,6 +16,16 @@
 #define fsg_min(VAL, MIN) (((VAL) < (MIN)) ? (VAL) : (MIN))
 #define fsg_max(VAL, MAX) (((VAL) > (MAX)) ? (VAL) : (MAX))
 
+#define fsg_directed_rect(DIR_, W, H) \
+    SDL_Rect dest = { 0, 0, W, H }; \
+    switch(DIR_) { \
+        case fsg_up: dest.x = 0; break; \
+        case fsg_down: dest.x = W; break; \
+        case fsg_left: dest.x = 2*W; break;\
+        case fsg_right: dest.x = 3*W; break;\
+        default: break; \
+    }
+
 inline int fsg_minmax(int val, int min, int max) {
     int x = val;
     if(x < min) x = min;

@@ -3,7 +3,7 @@
 #include "fsg_util.h"
 
 static inline SDL_Texture** load_tiles(char* path, uint8_t max_tiles, SDL_Renderer** r) {
-    SDL_Texture** ts = malloc(max_tiles*sizeof(SDL_Texture*));
+    SDL_Texture** ts = malloc((max_tiles+1)*sizeof(SDL_Texture*));
     fsg_rnilm(ts);
 
     char file[FSG_STR_MAX_LEN];
@@ -36,9 +36,9 @@ static inline void render_tiles(fsg_dungeon* d, SDL_Renderer** r) {
             uint8_t mx = d->camera.x + x;
             uint8_t my = d->camera.y + y;
             uint8_t n = d->map->data[my][mx];
-            if(n > FSG_TILE_NONE) {
-                SDL_Rect rect = { 
-                    x*d->config->tilesize, 
+            if(n > FSG_TILE_NONE && n <= d->config->max_tiles) {
+                SDL_Rect rect = {
+                    x*d->config->tilesize,
                     y*d->config->tilesize,
                     d->config->tilesize,
                     d->config->tilesize
