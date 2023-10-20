@@ -29,6 +29,10 @@ int main(int argc, char* argv[]) {
     while(sdl->run) {
         while(SDL_PollEvent(&sdl->event)) {
             if(sdl->event.type == SDL_QUIT) sdl->run = 0;
+            if(sdl->event.type == SDL_KEYUP || sdl->event.type == SDL_CONTROLLERBUTTONUP) if(sdl->event.key.keysym.sym == SDLK_r || sdl->event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
+                fsg_clean(dungeon);
+                dungeon = fsg_dungeon_init(&config);
+            }
             fsg_movement(dungeon);
         }
         SDL_RenderClear(sdl->renderer);
@@ -37,6 +41,7 @@ int main(int argc, char* argv[]) {
         SDL_RenderPresent(sdl->renderer);
     }
 
+    fsg_clean(dungeon);
     sdl_clean(sdl);
     return 0;
 }
