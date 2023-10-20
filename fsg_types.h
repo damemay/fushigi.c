@@ -13,6 +13,12 @@ typedef enum {
     fsg_direction_count,
 } fsg_direction;
 
+typedef enum {
+    fsg_none,
+    fsg_player,
+    fsg_enemy,
+} fsg_entity_t;
+
 typedef struct {
     int x, y;
 } fsg_vec2;
@@ -45,6 +51,7 @@ typedef struct fsg_entity {
     fsg_vec2 pos;
     fsg_vec2 size;
     fsg_direction facing;
+    fsg_entity_t type;
     SDL_Texture* texture;
     struct fsg_entity* next;
 } fsg_entity;

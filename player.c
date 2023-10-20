@@ -18,6 +18,7 @@ fsg_entity* fsg_player_create(fsg_dungeon* d) {
     player->texture = IMG_LoadTexture(*d->config->sdl_renderer, d->config->player_path);
     player->size.x = d->config->player_width,
     player->size.y = d->config->player_height;
+    player->type = fsg_player;
 
     return player;
 }
@@ -38,6 +39,13 @@ static inline void player_move(fsg_dungeon* d, int dx, int dy) {
         d->player->pos.y = y;
         d->camera.x = update_camera(x, d->map->size.x, d->config->render_width);
         d->camera.y = update_camera(y, d->map->size.y, d->config->render_height);
+    }
+
+    if(d->map->data[y][x] == FSG_TILE_STAIRS) {
+        fsg_map_clean(d);
+        fsg_minimap_clean(d);
+        fsg_entity_clean(d);
+        fsg_dungeon_reload(d);
     }
 }
 

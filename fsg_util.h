@@ -36,16 +36,21 @@ inline int fsg_minmax(int val, int min, int max) {
 fsg_map* fsg_map_create(fsg_dungeon* d);
 void fsg_map_render(fsg_dungeon* d);
 void fsg_map_generate(fsg_dungeon* d);
+void fsg_map_clean(fsg_dungeon* dungeon);
 
 fsg_minimap* fsg_minimap_create(fsg_dungeon* d, uint8_t size);
 void fsg_minimap_render(fsg_dungeon* d);
+void fsg_minimap_clean(fsg_dungeon* dungeon);
 
 fsg_entity* fsg_entity_create(fsg_dungeon* d);
 void fsg_entity_render(fsg_dungeon* d);
+void fsg_entity_clean(fsg_dungeon* dungeon);
 
 fsg_entity* fsg_player_create(fsg_dungeon* d);
 void fsg_player_movement(fsg_dungeon* d);
 
 void fsg_camera_update(fsg_dungeon* d);
+
+void fsg_dungeon_reload(fsg_dungeon* d);
 
 #endif

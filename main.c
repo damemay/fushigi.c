@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
         .render_width   = 30,
         .render_height  = 17,
         .tilesize       = 32,
-        .max_tiles      = 2,
+        .max_tiles      = 3,
         .resource_path  = "res",
         .player_path    = "res/arrow.png",
         .player_width   = 32,
@@ -29,10 +29,6 @@ int main(int argc, char* argv[]) {
     while(sdl->run) {
         while(SDL_PollEvent(&sdl->event)) {
             if(sdl->event.type == SDL_QUIT) sdl->run = 0;
-            if(sdl->event.type == SDL_KEYUP || sdl->event.type == SDL_CONTROLLERBUTTONUP) if(sdl->event.key.keysym.sym == SDLK_r || sdl->event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
-                fsg_clean(dungeon);
-                dungeon = fsg_dungeon_init(&config);
-            }
             fsg_movement(dungeon);
         }
         SDL_SetRenderDrawColor(sdl->renderer, 0, 0, 0, 255);

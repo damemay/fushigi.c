@@ -46,29 +46,60 @@ static inline int room_make(fsg_dungeon* d, int x, int y, fsg_direction dir) {
         default: break;
     }
 
-    if(rect_place(d, &room, FSG_TILE_GROUND)) return 1;
+    if(rect_place(d, &room, FSG_TILE_GROUND)) {
+        d->map->data[room.y-1][room.x] = FSG_TILE_GROUND;
+        d->map->data[room.y+room.h][room.x] = FSG_TILE_GROUND;
+        d->map->data[room.y][room.x-1] = FSG_TILE_GROUND;
+        d->map->data[room.y][room.x+room.w] = FSG_TILE_GROUND;
+        return 1;
+    }
     return 0;
 }
 
-static inline void print(fsg_dungeon* dungeon) {
-    for(uint8_t y=0; y<FSG_MAP_HEIGHT; ++y) {
-        for(uint8_t x=0; x<FSG_MAP_WIDTH; ++x) {
-            switch(dungeon->map->data[y][x]) {
-                case FSG_TILE_NONE: putchar(' '); break;
-                case FSG_TILE_GROUND: putchar('.'); break;
-                case FSG_TILE_WALL: putchar('#'); break;
-                case FSG_TILE_STAIRS: putchar('>'); break;
+static inline int try_room(fsg_dungeon* d, int* e) {
+    int x = 0, y = 0;
+    for(int i=0; i<1000; ++i) {
+        x = rand()%FSG_MAP_WIDTH;
+        y = rand()%FSG_MAP_HEIGHT;
+        if(room_make(d, x, y, rand()%4)) {
+            if(rand()%100 > 10) {
+                d->player->pos.x = x;
+                d->player->pos.x = y;
+            } else {
+                if(!*e) {
+                    d->map->data[y][x] = FSG_TILE_STAIRS;
+                    *e = 1;
+                }
             }
         }
-        putchar('\n');
-    }
-}
-
-static inline int try_element(fsg_dungeon* d) {
-    for(int i=0; i<1000; ++i) {
-        room_make(d, rand()%FSG_MAP_WIDTH, rand()%FSG_MAP_HEIGHT, rand()%4);
     }
     return 0;
+}
+
+static inline void find_nearest_ground_for_player(fsg_dungeon* d, int x, int y) {
+    int pdx = 1, ndx = -1, pdy = 1, ndy = -1;
+    while(x+pdx < FSG_MAP_WIDTH || y+pdy < FSG_MAP_HEIGHT || x+ndx > 0 || y+ndy > 0) {
+        if(d->map->data[y][x+pdx] != FSG_TILE_GROUND) pdx++;
+        else {
+            d->player->pos.x += pdx;
+            break;
+        }
+        if(d->map->data[y][x+ndx] != FSG_TILE_GROUND) ndx--;
+        else {
+            d->player->pos.x += ndx;
+            break;
+        }
+        if(d->map->data[y+pdy][x] != FSG_TILE_GROUND) pdy++;
+        else {
+            d->player->pos.y += pdy;
+            break;
+        }
+        if(d->map->data[y+ndy][x] != FSG_TILE_GROUND) ndy--;
+        else {
+            d->player->pos.y += ndy;
+            break;
+        }
+    }
 }
 
 static inline void make_walls(fsg_dungeon* d) {
@@ -96,7 +127,10 @@ void fsg_map_generate(fsg_dungeon* d) {
         return;
     }
 
-    for(int i = 1; i<10; ++i) try_element(d);
+    int exit_exists = 0;
+
+    for(int i = 1; i<5+rand()%15; ++i) try_room(d, &exit_exists);
     make_walls(d);
-    print(d);
+    if(d->map->data[d->player->pos.y][d->player->pos.x] != FSG_TILE_GROUND)
+        find_nearest_ground_for_player(d, d->player->pos.x, d->player->pos.y);
 }
