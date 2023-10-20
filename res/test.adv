@@ -1,0 +1,29 @@
+960 544 3 res/
+
+!scene
+  !bg
+    image(2).png
+    imageupdate.png
+    image(3).png
+    image(4).png
+  !script
+    .......
+    @image 1
+    werqrewq
+    sadaszxvzx
+    zxvzx
+    zzz
+    @image 2
+    ........................
+    werhwoqrwq  wqrqw
+    wqrwqr wq
+    rwq
+     rweq
+     rwqrweq
+     rq
+
+    @image 3
+    ...................................
+    ebroiwerqwejqw
+    ejoqrjowiqjrwqorj
+    wqrjwqprjwqerjwqerjqw rqwjrwrqwejroi
