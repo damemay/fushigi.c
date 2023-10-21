@@ -20,17 +20,16 @@ typedef enum {
 } fsg_entity_t;
 
 typedef struct {
-    int x, y;
-} fsg_vec2;
-
-typedef struct {
     uint16_t screen_width, screen_height;
     uint8_t render_width, render_height;
     uint8_t tilesize;
     uint8_t max_tiles;
+    uint8_t minimap_tilesize;
     char resource_path[FSG_STR_MAX_LEN];
     char player_path[FSG_STR_MAX_LEN];
     uint8_t player_width, player_height;
+    float* delta_time;
+    int debug;
     SDL_Renderer** sdl_renderer;
     SDL_Event* sdl_event;
 } fsg_config;
@@ -38,20 +37,29 @@ typedef struct {
 typedef struct {
     SDL_Rect* rects;
     int rect_count;
+    int iter;
     uint8_t size;
 } fsg_minimap;
 
 typedef struct {
-    fsg_vec2 size;
+    SDL_Rect rect;
+    SDL_Point exit[4];
+} fsg_room;
+
+typedef struct {
+    SDL_Point size;
     uint8_t data[FSG_MAP_HEIGHT][FSG_MAP_WIDTH];
+    fsg_room* rooms;
+    uint8_t room_count;
     SDL_Texture** tiles;
 } fsg_map;
 
 typedef struct fsg_entity {
-    fsg_vec2 pos;
-    fsg_vec2 size;
+    SDL_Point pos;
+    SDL_Point size;
     fsg_direction facing;
     fsg_entity_t type;
+    void (*data);
     SDL_Texture* texture;
     struct fsg_entity* next;
 } fsg_entity;
@@ -62,7 +70,7 @@ typedef struct {
     fsg_map* map;
     fsg_minimap* minimap;
     fsg_entity* player;
-    fsg_vec2 camera;
+    SDL_Point camera;
 } fsg_dungeon;
 
 #endif
