@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
         .render_height  = 17,
         .tilesize       = 32,
         .max_tiles      = 3,
-        .minimap_tilesize = 6,
+        .minimap_tilesize = 4,
         .resource_path  = "res",
         .player_path    = "res/arrow.png",
         .player_width   = 32,
