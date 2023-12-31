@@ -1,6 +1,9 @@
+#define FSG_MAP_WIDTH           50
+#define FSG_MAP_HEIGHT          50
+
 #include "fsg.h"
-#include "fsg_sdl.h"
-#include "fsg_util.h"
+#include "sdl.h"
+#include "util.h"
 
 #define TITLE   "fushigi.c"
 #define WIDTH   960
@@ -19,6 +22,10 @@ int main(int argc, char* argv[]) {
         .render_height  = 17,
         .tilesize       = 32,
         .max_tiles      = 3,
+        .tile_none      = 0,
+        .tile_ground    = 1,
+        .tile_wall      = 2,
+        .tile_stairs    = 3,
         .minimap_tilesize = 4,
         .resource_path  = "res",
         .player_path    = "res/arrow.png",

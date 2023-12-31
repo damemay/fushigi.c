@@ -1,6 +1,5 @@
-#include "fsg_define.h"
-#include "fsg_types.h"
-#include "fsg_util.h"
+#include "types.h"
+#include "util.h"
 #include <time.h>
 
 fsg_dungeon* fsg_dungeon_init(fsg_config* config) {

@@ -1,7 +1,7 @@
 #ifndef FSG_H
 #define FSG_H
 
-#include "fsg_types.h"
+#include "types.h"
 
 fsg_dungeon* fsg_dungeon_init(fsg_config* config);
 void fsg_update(fsg_dungeon* dungeon);

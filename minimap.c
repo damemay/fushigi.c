@@ -1,12 +1,11 @@
-#include "fsg_define.h"
-#include "fsg_types.h"
-#include "fsg_util.h"
+#include "types.h"
+#include "util.h"
 
 static inline int map_ground_count(fsg_dungeon* d) {
     int count = 0;
     for(uint8_t y=0; y<FSG_MAP_HEIGHT; y++)
         for(uint8_t x=0; x<FSG_MAP_WIDTH; x++)
-            if(d->map->data[y][x] == FSG_TILE_GROUND) count++;
+            if(d->map->data[y][x] == d->config->tile_ground) count++;
     return count;
 }
 
@@ -23,7 +22,7 @@ void fsg_add_to_minimap(fsg_dungeon* d, int x, int y) {
         if(r->x == x*d->minimap->size && r->y == y*d->minimap->size) return;
     }
 
-    if(i_<d->minimap->rect_count && d->map->data[y][x] != FSG_TILE_WALL && d->map->data[y][x] != FSG_TILE_NONE) {
+    if(i_<d->minimap->rect_count && d->map->data[y][x] != d->config->tile_wall && d->map->data[y][x] != d->config->tile_none) {
        d->minimap->rects[i_].x = x*d->minimap->size;
        d->minimap->rects[i_].y = y*d->minimap->size;
        d->minimap->rects[i_].w = d->minimap->size;
@@ -37,8 +36,8 @@ static inline void minimap_rects_make(fsg_dungeon* d, SDL_Rect* rects, uint8_t s
     for(uint8_t y=0; y<FSG_MAP_HEIGHT; y++)
         for(uint8_t x=0; x<FSG_MAP_WIDTH; x++) {
             if(i<count &&
-                    d->map->data[y][x] != FSG_TILE_NONE && 
-                    d->map->data[y][x] != FSG_TILE_WALL) {
+                    d->map->data[y][x] != d->config->tile_none && 
+                    d->map->data[y][x] != d->config->tile_wall) {
                 rects[i].x = x*size;
                 rects[i].y = y*size;
                 rects[i].w = size;

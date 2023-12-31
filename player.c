@@ -1,6 +1,5 @@
-#include "fsg_define.h"
-#include "fsg_types.h"
-#include "fsg_util.h"
+#include "types.h"
+#include "util.h"
 
 static inline int update_camera(int val, int width, int render_width) {
     int x = val;
@@ -34,7 +33,7 @@ static inline void player_move(fsg_dungeon* d, int dx, int dy) {
     int y = d->player->pos.y + dy;
     y = fsg_minmax(y, 0, d->map->size.y);
 
-    if((d->map->data[y][x] != FSG_TILE_NONE && d->map->data[y][x] != FSG_TILE_WALL) || d->config->debug) {
+    if((d->map->data[y][x] != d->config->tile_none && d->map->data[y][x] != d->config->tile_wall) || d->config->debug) {
         d->player->pos.x = x;
         d->player->pos.y = y;
         d->camera.x = update_camera(x, d->map->size.x, d->config->render_width);
@@ -42,7 +41,7 @@ static inline void player_move(fsg_dungeon* d, int dx, int dy) {
         memset(d->player->data, 1, sizeof(uint8_t));
     }
 
-    if(d->map->data[y][x] == FSG_TILE_STAIRS) fsg_dungeon_reload(d);
+    if(d->map->data[y][x] == d->config->tile_stairs) fsg_dungeon_reload(d);
 }
 
 void fsg_player_movement(fsg_dungeon *d) {

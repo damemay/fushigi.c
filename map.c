@@ -1,12 +1,11 @@
-#include "fsg_define.h"
-#include "fsg_types.h"
-#include "fsg_util.h"
+#include "types.h"
+#include "util.h"
 
 static inline SDL_Texture** load_tiles(char* path, uint8_t max_tiles, SDL_Renderer** r) {
     SDL_Texture** ts = malloc((max_tiles+1)*sizeof(SDL_Texture*));
     fsg_rnilm(ts);
 
-    char file[FSG_STR_MAX_LEN];
+    char file[1024];
     for(uint8_t i=1; i<=max_tiles; i++) {
         sprintf(file, "%s/%d.png", path, i);
         ts[i] = IMG_LoadTexture(*r, file);
@@ -44,7 +43,7 @@ static inline void render_tiles(fsg_dungeon* d, SDL_Renderer** r) {
             uint8_t my = d->camera.y + y;
             my = fsg_minmax(my, 0, FSG_MAP_HEIGHT-1);
             uint8_t n = d->map->data[my][mx];
-            if(n > FSG_TILE_NONE && n <= d->config->max_tiles) {
+            if(n > d->config->tile_none && n <= d->config->max_tiles) {
                 int room = fsg_find_room_player_is_in(d);
                 fsg_room* room_ = &d->map->rooms[room];
                 if(room >= 0 &&

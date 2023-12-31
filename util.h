@@ -1,9 +1,11 @@
 #ifndef FSG_UTIL_H
 #define FSG_UTIL_H
 
-#include "fsg_define.h"
-#include "fsg_types.h"
+#include "types.h"
 #include <assert.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 #define fsg_logv(msg, ...) printf("fushigi.c: " msg "\n", __VA_ARGS__)
 #define fsg_log(msg) printf("fushigi.c: " msg "\n")

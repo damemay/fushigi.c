@@ -1,6 +1,5 @@
-#include "fsg_define.h"
-#include "fsg_types.h"
-#include "fsg_util.h"
+#include "types.h"
+#include "util.h"
 
 fsg_entity* fsg_entity_create(fsg_dungeon* d) {
     fsg_entity* e;

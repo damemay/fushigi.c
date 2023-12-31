@@ -1,5 +1,5 @@
-#include "fsg_sdl.h"
-#include "fsg_util.h"
+#include "sdl.h"
+#include "util.h"
 
 static inline void sdl_init(const char* title,
         const size_t w, const size_t h,

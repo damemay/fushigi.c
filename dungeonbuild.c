@@ -1,6 +1,5 @@
-#include "fsg_define.h"
-#include "fsg_types.h"
-#include "fsg_util.h"
+#include "types.h"
+#include "util.h"
 #include "fsg.h"
 
 static inline int rect_place(fsg_dungeon* d, SDL_Rect* rect) {
@@ -15,8 +14,8 @@ static inline int rect_place(fsg_dungeon* d, SDL_Rect* rect) {
     for(int y=rect->y-1; y<rect->y+rect->h+1; y++)
         for(int x=rect->x-1; x<rect->x+rect->w+1; x++) {
             if(x==rect->x-1 || y==rect->y-1 || x==rect->x+rect->w || y==rect->y+rect->h)
-                d->map->data[y][x] = FSG_TILE_WALL;
-            else d->map->data[y][x] = FSG_TILE_GROUND;
+                d->map->data[y][x] = d->config->tile_wall;
+            else d->map->data[y][x] = d->config->tile_ground;
         }
 
     return 1;
@@ -93,7 +92,7 @@ static inline void place_elements(fsg_dungeon* d, size_t tries, int max) {
             int x = d->map->rooms[room].exit[wall].x;
             int y = d->map->rooms[room].exit[wall].y;
             if(d->map->room_count < max && room_make(d, x, y, wall))
-                d->map->data[y][x] = FSG_TILE_GROUND;
+                d->map->data[y][x] = d->config->tile_ground;
         }
     }
 }
@@ -105,7 +104,7 @@ static inline fsg_room* init_rooms(int max) {
 }
 
 static inline void place_object(fsg_dungeon* d, int *dx, int *dy, int tile) {
-    while(d->map->data[*dy][*dx] != FSG_TILE_GROUND) {
+    while(d->map->data[*dy][*dx] != d->config->tile_ground) {
         int room = rand()%d->map->room_count;
         fsg_room* r = &d->map->rooms[room];
         int x = r->rect.x+1 + rand()%(r->rect.x + r->rect.w-2);
@@ -141,7 +140,7 @@ int fsg_find_room_player_is_in(fsg_dungeon* d) {
 void fsg_map_generate(fsg_dungeon* d) {
     for(uint8_t y=0; y<FSG_MAP_HEIGHT; y++)
         for(uint8_t x=0; x<FSG_MAP_WIDTH; x++)
-            d->map->data[y][x] = FSG_TILE_NONE;
+            d->map->data[y][x] = d->config->tile_none;
 
     int max_rooms = FSG_MAP_HEIGHT*FSG_MAP_WIDTH/100;
     d->map->rooms = init_rooms(max_rooms);
@@ -152,6 +151,6 @@ void fsg_map_generate(fsg_dungeon* d) {
     
     place_elements(d, 5000, max_rooms);
     place_player(d);
-    place_tile(d, FSG_TILE_STAIRS);
+    place_tile(d, d->config->tile_stairs);
 
 }

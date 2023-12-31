@@ -1,8 +1,7 @@
 #ifndef FSG_TYPES_H
 #define FSG_TYPES_H
 
-#include "fsg_const.h"
-#include "fsg_define.h"
+#include <SDL2/SDL.h>
 #include <stdint.h>
 
 typedef enum {
@@ -25,8 +24,9 @@ typedef struct {
     uint8_t tilesize;
     uint8_t max_tiles;
     uint8_t minimap_tilesize;
-    char resource_path[FSG_STR_MAX_LEN];
-    char player_path[FSG_STR_MAX_LEN];
+    uint8_t tile_none, tile_ground, tile_wall, tile_stairs;
+    char resource_path[1024];
+    char player_path[1024];
     uint8_t player_width, player_height;
     float* delta_time;
     int debug;
@@ -45,6 +45,13 @@ typedef struct {
     SDL_Rect rect;
     SDL_Point exit[4];
 } fsg_room;
+
+#ifndef FSG_MAP_WIDTH
+#define FSG_MAP_WIDTH 30
+#endif
+#ifndef FSG_MAP_HEIGHT
+#define FSG_MAP_HEIGHT 30
+#endif
 
 typedef struct {
     SDL_Point size;
