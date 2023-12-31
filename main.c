@@ -1,6 +1,5 @@
-#include "cdlv/menu/cdlv_menu.h"
-#include "fsg_define.h"
 #include "fsg.h"
+#include "fsg_sdl.h"
 #include "fsg_util.h"
 
 #define TITLE   "fushigi.c"

@@ -6,7 +6,6 @@ all:
 		map.c \
 		minimap.c \
 		dungeonbuild.c \
-		cdlv/menu/cdlv_sdl.c \
+		sdl.c \
 		-lSDL2 -lSDL2_image -lSDL2_ttf \
-		-L cdlv/build/ -lcdlv \
 		-o game
